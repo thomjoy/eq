@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <title>Earthquake map</title>
+    <link rel="stylesheet" href="style.css"></link>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDHkmCO0w9F0SR8BPsQ201QCfTCQATn1uU&sensor=false"></script>
+    <script type="text/javascript">
+        function initialize() {
+            var styles = [
+                {
+                  stylers: [
+                    { hue: "#06202f" },
+                    { saturation: -10 },
+                    { lightness: 0 }
+                  ]
+                },{
+                    featureType: "landscape.natural.terrain",
+                    stylers: [
+                        { hue: "0c4b70" },
+                        { saturation: -10 }
+                    ]
+                },{
+                  featureType: "road",
+                  elementType: "geometry",
+                  stylers: [
+                    { hue: "0c4b70" },
+                    { lightness: 100 },
+                    { visibility: "simplified" }
+                  ]
+                },{
+                  featureType: "road",
+                  elementType: "labels",
+                  stylers: [
+                        { visibility: "off" }
+                  ]
+                }, {
+                    featureType: "water",
+                    stylers: [
+                        { hue: "0c4b70" },
+                        { lightness: -30 }
+                    ]
+                }
+            ];
+
+            // Create a new StyledMapType object, passing it the array of styles,
+            // as well as the name to be displayed on the map type control.
+            var styledMap = new google.maps.StyledMapType(styles, {name: "Styled Map"});
+
+            // Create a map object, and include the MapTypeId to add
+            // to the map type control.
+            var mapOptions = {
+                zoom: 3,
+                center: new google.maps.LatLng(38.8442, -122.7555),
+                disableDefaultUI: true,
+                mapTypeControlOptions: {
+                    mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'mapStyle']
+                }
+            };
+
+            window.gmap = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+            //window.styledMap = new google.maps.StyledMapType(styles, {name: "Styled Map"});
+        }
+
+        function plot() {
+            var request = $.getJSON('http://localhost:8080/all/week', function(data) {
+                data.features.forEach(function(feature) {
+                    var pos = new google.maps.LatLng(
+                            +feature.geometry.coordinates[1],
+                            +feature.geometry.coordinates[0]
+                        );
+
+                    var properties = feature.properties,
+                        title = properties.mag + " at " + properties.place,
+                        marker = new google.maps.Marker({
+                            position: pos,
+                            title: title
+                        });
+
+                    marker.setMap(window.gmap);
+
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: "<p>" + properties.mag + " at <strong>" + properties.place + "</strong></p>"
+                    });
+
+                    google.maps.event.addListener(marker, 'click', function() {
+                      infoWindow.open(window.gmap, marker);
+                    });
+                });
+            });
+
+            //Associate the styled map with the MapTypeId and set it to display.
+            //window.gmap.mapTypes.set('mapStyle', window.gmap);
+            //window.gmap.setMapTypeId('mapStyle');
+        }
+
+        $(window).on('load', initialize);
+        setTimeout(plot, 1000);
+    </script>
+  </head>
+
+  <body>
+    <div class="container"></div>
+    <div id="map-canvas"></div>
+  </body>
+</html>

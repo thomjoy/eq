@@ -1,0 +1,19 @@
+html { height: 100% }
+body { height: 100%; margin: 0; }
+* { font-family: 'Arial'; }
+/*.blur {
+	-webkit-filter: blur(8px);
+	-moz-filter: blur(8px); 
+	grayscale(0.5)
+}*/
+.no-blur { -webkit-filter: blur(0px); }
+#map-canvas { overflow: hidden; height: 100% }
+.container { position: relative; }
+#map-overlay {
+	width: 100%;
+	height: 100%;
+
+	background-color: transparent;
+	position: absolute;
+	z-index: 1;
+}
