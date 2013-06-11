@@ -21,10 +21,28 @@
             };
 
             window.gmap = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+        }
 
-            var Model = Backbone.Model.extend({});
+        function init() {
+            //Backbone.sync = function Sync() {
+                //Backbone.sync.apply(this, arguments);
+                //return Backbone.LocalStorage.sync.apply(this, arguments);
+            //};
+            
+            var Model = Backbone.Model.extend({
+                initialize: function() {
+                    _.extend(this, this.options);
+                },
+
+                coordinates: function() {
+                    var geo = this.get('geometry');
+                    return [geo[0], geo[1]];
+                }
+            });
+
             var Points = Backbone.Collection.extend({
                 model: Model,
+
                 url: 'http://localhost:8080/all/week',
 
                 initialize: function() {
@@ -35,6 +53,10 @@
                     this.metadata = data.metadata;
                     return data.features;
                 },
+
+                comparator: function(m) {
+                    return -m.get('properties')['mag']
+                }
 
                 //localStorage: new Backbone.LocalStorage("Points")
 
@@ -48,6 +70,7 @@
                 //console.log(window.localStorage['points'].length);
                 
                 plotCircles();
+
             });
         }
 
@@ -83,6 +106,7 @@
         */
 
         function plotCircles() {
+            var listItems = "";
             window.points.forEach(function(p) {
                 var point = p.attributes;
                 var pos = new google.maps.LatLng(
@@ -141,17 +165,23 @@
                 };
                 new google.maps.Circle(populationOptions);
                 //c.setMap(window.gmap);
+
+                listItems += '<li id="' + point.id + '"><span class="mag">' + properties.mag + '</span> ' + properties.place  + '</li>';
+
             });
 
+            $('#quakes').html(listItems);
             $('#metadata').html(window.points.metadata.title).show();
         }
 
         $(window).on('load', initialize);
+        $(document).on('ready', init);
         </script>
   </head>
 
   <body>
     <div id="metadata"></div>
     <div id="map-canvas"></div>
+    <ul id="quakes"></ul>
   </body>
 </html>
