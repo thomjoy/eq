@@ -1,11 +1,24 @@
-// app.js
+// config.js
 requirejs.config({
-    "baseUrl": "client/",
-    "paths": {
-        "underscore":               "lib/underscore", 
-        "backbone":                 "lib/backbone",
-        "backbone.localStorage":    "lib/backbone.localstorage.js", 
-        "jquery":                   "lib/jquery-2.0.2-min",
-
+    'baseUrl': 'client/',
+    'paths': {},
+    'shim': {
+        'underscore': {
+            'exports': '_'
+        },
+        'jquery': {
+            'exports': '$'
+        },
+        'backbone': {
+            'deps': ['underscore', 'jquery'],
+            'exports': 'Backbone'
+        },
+        'backbone.localstorage': {
+            'deps': ['backbone'],
+            'exports': 'Backbone'
+        }
     }
 });
+
+// load the app.
+requirejs(["client/main"]);
