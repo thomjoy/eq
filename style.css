@@ -17,3 +17,14 @@ body { height: 100%; margin: 0; }
 	position: absolute;
 	z-index: 1;
 }
+
+#metadata {
+    height: 24px;
+    font-size: 14px;
+    font-family: "Helvetica Neue", helvetica, Arial;
+    color: #fff;
+    background-color: #333;
+    width: 100%;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}

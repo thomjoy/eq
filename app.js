@@ -48,7 +48,7 @@ api.get('/all/week', function(req, res) {
         //the whole response has been recieved, so we just print it out here
         response.on('end', function() {
             res.writeHead(200, headers);
-            res.end(str);
+            res.end(end);
         });
     };
 
