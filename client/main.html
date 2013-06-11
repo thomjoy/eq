@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <title>Test</title>
+    <link rel="stylesheet" href="style.css"></link>
+    <script data-main="client/app" src="js/lib/require.js"></script>
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
+    <script type="text/javascript" src="underscore.js"></script>
+    <script type="text/javascript" src="backbone.js"></script>
+    <script type="text/javascript" src="backbone.localstorage.js"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDHkmCO0w9F0SR8BPsQ201QCfTCQATn1uU&sensor=false"></script>
+    
+    <script type="text/javascript">
+        function initialize() {
+            // Create a map object, and include the MapTypeId to add
+            // to the map type control.
+            var mapOptions = {
+                zoom: 5,
+                center: new google.maps.LatLng(38.8442, -122.7555),
+                disableDefaultUI: false,
+                mapTypeIds: google.maps.MapTypeId.ROADMAP
+            };
+
+            window.gmap = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+        }
+
+        function init() {
+            //Backbone.sync = function Sync() {
+                //Backbone.sync.apply(this, arguments);
+                //return Backbone.LocalStorage.sync.apply(this, arguments);
+            //};
+            
+            var Model = Backbone.Model.extend({
+                initialize: function() {
+                    _.extend(this, this.options);
+                },
+
+                coordinates: function() {
+                    var geo = this.get('geometry');
+                    return [geo[0], geo[1]];
+                }
+            });
+
+            var Points = Backbone.Collection.extend({
+                model: Model,
+
+                url: 'http://localhost:8080/all/week',
+
+                initialize: function() {
+                    //this.fetch();
+                },
+
+                parse: function(data) {
+                    this.metadata = data.metadata;
+                    return data.features;
+                },
+
+                comparator: function(m) {
+                    return -m.get('properties')['mag']
+                }
+
+                //localStorage: new Backbone.LocalStorage("Points")
+
+            });
+
+
+            window.points = new Points()
+            $.when( window.points.fetch() ).done(function() {
+                console.log('fetched');
+                //window.points.localStorage();
+                //console.log(window.localStorage['points'].length);
+                
+                plotCircles();
+
+            });
+        }
+
+
+        /*
+        function plot() {
+            var request = $.getJSON('http://localhost:8080/all/week', function(data) {
+                data.features.forEach(function(feature) {
+                    var pos = new google.maps.LatLng(
+                            +feature.geometry.coordinates[1],
+                            +feature.geometry.coordinates[0]
+                        );
+
+                    var properties = feature.properties,
+                        title = properties.mag + " at " + properties.place,
+                        marker = new google.maps.Marker({
+                            position: pos,
+                            title: title
+                        });
+
+                    marker.setMap(window.gmap);
+
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: "<p>" + properties.mag + " at <strong>" + properties.place + "</strong></p>"
+                    });
+
+                    google.maps.event.addListener(marker, 'click', function() {
+                      infoWindow.open(window.gmap, marker);
+                    });
+                });
+            });
+        }
+        */
+
+        function plotCircles() {
+            var listItems = "";
+            window.points.forEach(function(p) {
+                var point = p.attributes;
+                var pos = new google.maps.LatLng(
+                        +point.geometry.coordinates[1],
+                        +point.geometry.coordinates[0]
+                    );
+                
+                var properties = point.properties;
+                var title = properties.mag + " at " + properties.place;
+
+                function magToColour(m) {
+                    switch( parseFloat(m, 10) ) {
+                        case ( m >= 0 && m < 0.99 ):
+                            return "#eee";
+                        break;
+
+                        case ( m >= 1 && m < 1.99 ):
+                            return "#ddd";
+                        break;
+
+                        case ( m >= 2 && m <  2.99 ):
+                            return "#ccc";
+                        break;
+
+                        case ( m >= 3 && m < 3.99 ):
+                            return "#bbb";
+                        break;
+
+                        case ( m >= 4 && m < 4.99 ):
+                            return "#aaa";
+                        break;
+
+                        case ( m >= 5 && m < 5.99 ):
+                            return "#999";
+                        break;
+
+                        case ( m >= 6 && m < 6.99 ):
+                            return "#999";
+                        break;
+
+                        case ( m >= 6 && m < 6.99 ):
+                            return "#888";
+                        break;
+                    }
+                }
+
+                var populationOptions = {
+                    strokeOpacity: 0,
+                    strokeWeight: 0,
+                    strokeColor: '#FF0000',
+                    fillColor: magToColour(properties.mag),
+                    fillOpacity: 0.1,
+                    map: window.gmap,
+                    center: pos,
+                    radius: 10000 * properties.mag
+                };
+                new google.maps.Circle(populationOptions);
+                //c.setMap(window.gmap);
+
+                listItems += '<li id="' + point.id + '"><span class="mag">' + properties.mag + '</span> ' + properties.place  + '</li>';
+
+            });
+
+            $('#quakes').html(listItems);
+            $('#metadata').html(window.points.metadata.title).show();
+        }
+
+        $(window).on('load', initialize);
+        $(document).on('ready', init);
+        </script>
+  </head>
+
+  <body>
+    <div id="metadata"></div>
+    <div id="map-canvas"></div>
+    <ul id="quakes"></ul>
+  </body>
+</html>
