@@ -1,7 +1,6 @@
 requirejs.config({
     waitSeconds: 30,
     paths: {
-
         // plugins
         //create alias to plugins (not needed if plugins are on the baseUrl)
         async: '/client/lib/requirejs-plugins/src/async',
