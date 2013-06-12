@@ -11,20 +11,26 @@ define(
 define([
     'gmaps',
     'backbone',
-    'jquery',
     'v/map',
+    'v/listview',
     'm/points'
 ], function(
     gmaps,
     Backbone,
-    $,
     GoogleMapView,
+    ListView,
     PointsCollection
 ){
     'use strict';
 
     // yay!
     var mapView = new GoogleMapView();
+
+    // list
+    var listView = new ListView({
+        id: 'quakes'
+    });
+
     var points = new PointsCollection();
 
     $.when( points.fetch() ).done(function() {
@@ -72,6 +78,7 @@ define([
                 }
             }
 
+            // new QuakeRadiusView...
             var populationOptions = {
                 strokeOpacity: 0,
                 strokeWeight: 0,
@@ -82,12 +89,12 @@ define([
                 center: pos,
                 radius: 10000 * properties.mag
             };
+            new gmaps.Circle(populationOptions);
 
-            new google.maps.Circle(populationOptions);
-            //c.setMap(window.gmap);
-
-            //listItems += '<li id="' + point.id + '"><span class="mag">' + properties.mag + '</span> ' + properties.place  + '</li>';
+            // ul
+            listItems += '<li id="list-item-' + point.id + '"><span class="mag">' + properties.mag + '</span> ' + properties.place  + '</li>';
         });
-    }
 
+        listView.renderListString(listItems);
+    }
 });
