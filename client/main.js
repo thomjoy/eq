@@ -20,6 +20,4 @@ define([
     console.log(gmaps);
     console.log(Backbone);
     console.log($);
-
-    
 });
