@@ -8,6 +8,10 @@ define(['gmaps', 'backbone'], function(gmaps, Backbone) {
             this.render();
         },
 
+        getMap: function() {
+            return this.map;
+        },
+
         render: function() {
             var mapOptions = {
                 zoom: 5,
