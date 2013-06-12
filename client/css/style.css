@@ -7,16 +7,8 @@ body { height: 100%; margin: 0; }
 	grayscale(0.5)
 }*/
 .no-blur { -webkit-filter: blur(0px); }
-#map-canvas { overflow: hidden; height: 100% }
+#map { overflow: hidden; height: 100% }
 .container { position: relative; }
-#map-overlay {
-	width: 100%;
-	height: 100%;
-
-	background-color: transparent;
-	position: absolute;
-	z-index: 1;
-}
 
 #metadata {
     height: 24px;
