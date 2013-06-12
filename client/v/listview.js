@@ -13,7 +13,6 @@ define(['backbone'], function() {
 
         renderListString: function(listItemsAsString) {
             this.$el.html(listItemsAsString);
-            console.log(listItemsAsString.length);
         }
     });
 });

@@ -1,6 +1,12 @@
-define(['backbone'], function(Backbone) {
+define([
+    'backbone',
+    'm/quake'
+], function(
+    Backbone,
+    Quake
+){
     return Backbone.Collection.extend({
-        model: Backbone.Model,
+        model: Quake,
 
         url: 'http://localhost:8080/all/week',
 
@@ -18,6 +24,5 @@ define(['backbone'], function(Backbone) {
         }
 
         //localStorage: new Backbone.LocalStorage("Points")
-
     });
 });

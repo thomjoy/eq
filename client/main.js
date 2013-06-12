@@ -13,12 +13,14 @@ define([
     'backbone',
     'v/map',
     'v/listview',
-    'm/points'
+    'v/gmapcircle',
+    'm/points' // collection
 ], function(
     gmaps,
     Backbone,
     GoogleMapView,
     ListView,
+    GoogleMapsCircleView,
     PointsCollection
 ){
     'use strict';
@@ -32,6 +34,7 @@ define([
     });
 
     var points = new PointsCollection();
+    var circleCollection = new Backbone.Collection;
 
     $.when( points.fetch() ).done(function() {
         console.log(points.length + ' points found');
@@ -79,6 +82,7 @@ define([
             }
 
             // new QuakeRadiusView...
+            /*
             var populationOptions = {
                 strokeOpacity: 0,
                 strokeWeight: 0,
@@ -90,11 +94,30 @@ define([
                 radius: 10000 * properties.mag
             };
             new gmaps.Circle(populationOptions);
+            */
 
+            var c = new GoogleMapsCircleView({
+                id: 'circle-' + p.id,
+                model: p,
+                viewOptions: {
+                    strokeOpacity: 0,
+                    strokeWeight: 0,
+                    strokeColor: '#FF0000',
+                    fillColor: magToColour(properties.mag),
+                    fillOpacity: 0.1,
+                    map: mapView.getMap(),
+                    center: pos,
+                    radius: 10000 * properties.mag
+                }
+            });
+
+            circleCollection.add(c);
+            
             // ul
             listItems += '<li id="list-item-' + point.id + '"><span class="mag">' + properties.mag + '</span> ' + properties.place  + '</li>';
         });
 
         listView.renderListString(listItems);
+        console.log(circleCollection.models[5]);
     }
 });
