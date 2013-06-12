@@ -6,7 +6,4 @@ define([
     Backbone,
     $
 ){
-    $(document).on('ready', function() {
-        alert('hello world!');
-    });
 });
