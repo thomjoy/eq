@@ -22,7 +22,7 @@ define(['backbone'], function() {
         renderListString: function(list) {
             var tmp = '';
             _.each(list, function(p) {
-                tmp += '<li id="list-item-' + p.attributes.properties.id + '"><span class="mag">' + p.attributes.properties.mag + '</span> ' + p.attributes.properties.place  + '</li>';
+                tmp += '<li id="list-item-' + p.attributes.properties.id + '"><strong class="mag ' + p.get('magRating') + '">' + p.attributes.properties.mag + '</span> ' + p.attributes.properties.place  + '</li>';
             });
             return tmp;
         }
