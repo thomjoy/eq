@@ -68,13 +68,6 @@ define([
                 properties = point.properties,
                 title = properties.mag + " at " + properties.place;
 
-            p.set('magRating', function() {
-                var m = Math.ceil(properties.mag);
-                if( m < 3 ) return 'light';
-                if( m < 6 ) return 'medium';
-                else return 'severe';
-            });
-
             var c = new GoogleMapsCircleView({
                 id: 'circle-' + p.id,
                 model: p,

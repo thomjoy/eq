@@ -25,9 +25,12 @@ define(['backbone'], function() {
 
         renderListAsString: function(list) {
             var tmp = '';
-            _.each(list, function(p) {
-                tmp += '<li id="list-item-' + p.attributes.properties.id + '"><strong class="mag ' + p.get('magRating') + '">' + p.attributes.properties.mag + '</span> ' + p.attributes.properties.place  + '</li>';
+
+            _.each(list, function(p, index) {
+                if(index === 0) console.log(p.magRating());
+                tmp += '<li id="list-item-' + p.get('id') + '"><strong class="mag ' + p.magRating() + '">' + p.get('properties').mag + '</strong> ' + p.get('properties').place  + '</li>';
             });
+
             return tmp;
         }
     });

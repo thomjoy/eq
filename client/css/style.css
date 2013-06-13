@@ -43,6 +43,6 @@ body { height: 100%; margin: 0; }
 #quakes li { font-size: 12px; color: #666; border-bottom: 1px solid #eee; padding-top: 6px; padding-bottom: 6px; }
 #quakes li .mag { display: inline-block; margin-right: 8px; color: #333; }
 
-#quakes li .light { }
-#quakes li .medium { }
-#quakes li .severe { }
+#quakes li .light { color: green; }
+#quakes li .medium { color: blue; }
+#quakes li .severe { color: red; }
