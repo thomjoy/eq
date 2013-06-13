@@ -7,8 +7,14 @@ define(['gmaps', 'backbone'], function(gmaps, Backbone) {
         },
 
         render: function() {
-            new gmaps.Circle(this.viewOptions);
-        }
+            this.mapCircle = new gmaps.Circle(this.viewOptions);
 
+            var _this = this;
+            gmaps.event.addListener(this.mapCircle, 'click', function(ev){
+                //infoWindow.setPosition(ev.latLng);
+                //infoWindow.open(map);
+                console.log(_this.model.get('id') + _this.model.get('properties').mag + ' at ' + _this.model.get('properties').place );
+            });
+        }
     });
 });

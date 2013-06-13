@@ -22,7 +22,7 @@ define([
 ], function(
     gmaps,
     Backbone,
-    
+
     h,
 
     FormView,
@@ -72,6 +72,7 @@ define([
                 id: 'circle-' + p.id,
                 model: p,
                 viewOptions: {
+                    clickable: true,
                     strokeOpacity: 0,
                     strokeWeight: 0,
                     strokeColor: 'transparent',
