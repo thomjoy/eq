@@ -20,7 +20,8 @@ define([
         },
 
         comparator: function(m) {
-            return -m.get('properties')['mag'];
+            console.log(m);
+            return -m.get('properties').mag;
         }
 
         //localStorage: new Backbone.LocalStorage("Points")

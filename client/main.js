@@ -33,21 +33,22 @@ define([
 ){
     'use strict';
 
-    // group by mag
-    // group by region
+    var vent = _.clone(Backbone.Events);
 
     var mapView = new GoogleMapView({
-        ready: false
+        vent: vent
     });
+
     var formView = new FormView();
 
     var points = new PointsCollection();
-    var circleCollection = new Backbone.Collection;
-    
+    var circleCollection = new Backbone.Collection();
+
     // list
     var listView = new ListView({
         id: 'quakes',
-        collection: points
+        collection: points,
+        vent: vent
     });
 
     // fetch all the models
@@ -86,7 +87,7 @@ define([
 
             circleCollection.add(c);
         });
-        
+
         mapView.removeBlur();
     }
 });

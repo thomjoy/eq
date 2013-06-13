@@ -8,6 +8,13 @@ define(['gmaps', 'backbone'], function(gmaps, Backbone) {
         initialize: function() {
             _.extend(this, this.options);
             this.render();
+
+            this.listenTo(this.vent, 'map:navto', this.navToLatLng)
+        },
+
+        navToLatLng: function(coords) {
+            var pos = new gmaps.LatLng(coords.lat, coords.lng);
+            this.map.setCenter(pos);
         },
 
         getMap: function() {
