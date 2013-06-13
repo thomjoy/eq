@@ -11,6 +11,10 @@ define(
 define([
     'gmaps',
     'backbone',
+
+    'h/helpers',
+
+    'v/formview',
     'v/map',
     'v/listview',
     'v/gmapcircle',
@@ -18,6 +22,10 @@ define([
 ], function(
     gmaps,
     Backbone,
+    
+    h,
+
+    FormView,
     GoogleMapView,
     ListView,
     GoogleMapsCircleView,
@@ -25,18 +33,25 @@ define([
 ){
     'use strict';
 
-    // yay!
-    var mapView = new GoogleMapView();
+    // group by mag
+    // group by region
 
-    // list
-    var listView = new ListView({
-        id: 'quakes'
+    var mapView = new GoogleMapView({
+        ready: false
     });
+    var formView = new FormView();
 
     var points = new PointsCollection();
     var circleCollection = new Backbone.Collection;
+    
+    // list
+    var listView = new ListView({
+        id: 'quakes',
+        collection: points
+    });
 
-    $.when( points.fetch() ).done(function() {
+    // fetch all the models
+    $.when( points.fetch({reset: true}) ).done(function() {
         console.log(points.length + ' points found');
         plotCircles(points);
     });
@@ -53,48 +68,7 @@ define([
                 properties = point.properties,
                 title = properties.mag + " at " + properties.place;
 
-            function magToColour(m) {
-                switch( parseFloat(m, 10) ) {
-                    case ( m >= 0 && m < 0.99 ):
-                        return "#eee";
-                    
-                    case ( m >= 1 && m < 1.99 ):
-                        return "#ddd";
-                    
-                    case ( m >= 2 && m <  2.99 ):
-                        return "#ccc";
-
-                    case ( m >= 3 && m < 3.99 ):
-                        return "#bbb";
-                    
-                    case ( m >= 4 && m < 4.99 ):
-                        return "#aaa";
-                    
-                    case ( m >= 5 && m < 5.99 ):
-                        return "#999";
-                    
-                    case ( m >= 6 && m < 6.99 ):
-                        return "#999";
-
-                    case ( m >= 6 && m < 6.99 ):
-                        return "#888";
-                }
-            }
-
-            // new QuakeRadiusView...
-            /*
-            var populationOptions = {
-                strokeOpacity: 0,
-                strokeWeight: 0,
-                strokeColor: '#FF0000',
-                fillColor: magToColour(properties.mag),
-                fillOpacity: 0.1,
-                map: mapView.getMap(),
-                center: pos,
-                radius: 10000 * properties.mag
-            };
-            new gmaps.Circle(populationOptions);
-            */
+            p.set('range', Math.ceil(properties.mag));
 
             var c = new GoogleMapsCircleView({
                 id: 'circle-' + p.id,
@@ -102,9 +76,9 @@ define([
                 viewOptions: {
                     strokeOpacity: 0,
                     strokeWeight: 0,
-                    strokeColor: '#FF0000',
-                    fillColor: magToColour(properties.mag),
-                    fillOpacity: 0.1,
+                    strokeColor: 'transparent',
+                    fillColor: h.magToColour(properties.mag),
+                    fillOpacity: 0.4,
                     map: mapView.getMap(),
                     center: pos,
                     radius: 10000 * properties.mag
@@ -112,12 +86,8 @@ define([
             });
 
             circleCollection.add(c);
-            
-            // ul
-            listItems += '<li id="list-item-' + point.id + '"><span class="mag">' + properties.mag + '</span> ' + properties.place  + '</li>';
         });
-
-        listView.renderListString(listItems);
-        console.log(circleCollection.models[5]);
+        
+        mapView.removeBlur();
     }
 });

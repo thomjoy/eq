@@ -5,14 +5,26 @@ define(['backbone'], function() {
         initialize: function() {
             _.extend(this, this.options);
             this.render();
+            this.listItemsAsString = '';
+            this.listenTo(this.collection, 'reset', this.render);
         },
 
         render: function() {
-            this.$el.appendTo('body');
+            console.log('Collection Changed');
+            this.$el.detach();
+            this.$el.empty();
+            this.$el
+                .html(this.renderListString(this.collection.models))
+                .appendTo('body');
         },
 
-        renderListString: function(listItemsAsString) {
-            this.$el.html(listItemsAsString);
+
+        renderListString: function(list) {
+            var tmp = '';
+            _.each(list, function(p) {
+                tmp += '<li id="list-item-' + p.attributes.properties.id + '"><span class="mag">' + p.attributes.properties.mag + '</span> ' + p.attributes.properties.place  + '</li>';
+            });
+            return tmp;
         }
     });
 });

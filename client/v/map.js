@@ -3,13 +3,25 @@ define(['gmaps', 'backbone'], function(gmaps, Backbone) {
     return Backbone.View.extend({
         id: 'map',
 
+        className: 'blur',
+
         initialize: function() {
             _.extend(this, this.options);
+
+            if( this.ready === false ) {
+                console.log('Adding blur');
+                this.className = 'blur';
+            }
+
             this.render();
         },
 
         getMap: function() {
             return this.map;
+        },
+
+        removeBlur: function() {
+            this.$el.removeClass('blur');
         },
 
         render: function() {
