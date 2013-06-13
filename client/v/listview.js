@@ -52,13 +52,11 @@ define(['templates'], function(templates) {
         },
 
         highlightOnMap: function(evt){
-            var quakeId = this.$(evt.currentTarget).data('id');
-            var model = this.collection.get(quakeId);
-            var position = model.attributes.geometry.coordinates;
+            var quakeId = this.$(evt.currentTarget).data('id'),
+                model = this.collection.get(quakeId),
+                position = model.attributes.geometry.coordinates;
 
             this.vent.trigger('map:navto', {lat: position[1], lng: position[0]});
-            console.log({lat: position[1], lng: position[0]});
         }
-
     });
 });

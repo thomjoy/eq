@@ -1,4 +1,4 @@
-define(['gmaps', 'backbone'], function(gmaps, Backbone) {
+define(['gmaps', 'backbone', 'templates'], function(gmaps, Backbone, templates) {
     return Backbone.View.extend({
 
         initialize: function() {
@@ -13,8 +13,14 @@ define(['gmaps', 'backbone'], function(gmaps, Backbone) {
             var _this = this;
             gmaps.event.addListener(this.mapCircle, 'click', function(evt){
 
+                var infoWindowContent = {
+                    id: _this.model.get('id'),
+                    mag: _this.model.get('properties').mag,
+                    place: _this.model.get('properties').place
+                };
+
                 var infoWindow = new gmaps.InfoWindow({
-                    content: _this.model.get('id') + ' ' + _this.model.get('properties').mag + ' at ' + _this.model.get('properties').place 
+                    content: _.template(templates.infoWindow, infoWindowContent)
                 });
 
                 infoWindow.setPosition(evt.latLng);
