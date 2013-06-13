@@ -20,7 +20,6 @@ define([
         },
 
         comparator: function(m) {
-            console.log(m);
             return -m.get('properties').mag;
         }
 

@@ -15,7 +15,7 @@ body { height: 100%; margin: 0; }
     height: 28px;
     padding-top: 3px;
     padding-bottom: 3px;
-    border-top: 1px solid #fff;
+    border-top: 1px solid #aaa;
 }
     
 #interact-form input {

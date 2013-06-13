@@ -1,4 +1,4 @@
-define(['backbone'], function() {
+define(['templates'], function(templates) {
     return Backbone.View.extend({
         tagName: 'ul',
 
@@ -29,10 +29,23 @@ define(['backbone'], function() {
 
         renderListAsString: function(list) {
             var tmp = '';
-
             _.each(list, function(p, index) {
-                if(index === 0) console.log(p.magRating());
-                tmp += '<li id="list-item-' + p.get('id') + '" data-id="' + p.get('id') + '"><strong class="mag ' + p.magRating() + '">' + p.get('properties').mag + '</strong> ' + p.get('properties').place  + '</li>';
+                var templateData = {
+                    id: p.get('id'),
+                    mag: p.get('properties').mag,
+                    magRating: p.magRating(),
+                    place: p.get('properties').place,
+                    detail: p.get('properties').detail,
+                    time: p.getTime(),
+                    sig: p.get('properties').sig,
+                    status: p.get('properties').status,
+
+                    lat: p.get('geometry').coordinates[1],
+                    lng: p.get('geometry').coordinates[0],
+                    depth: p.get('geometry').coordinates[2]
+                };
+
+                tmp += _.template(templates.listViewItem, templateData);
             });
 
             return tmp;

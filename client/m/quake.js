@@ -8,8 +8,10 @@ define(['backbone'], function(Backbone) {
             else return 'severe';
         },
 
-        getLatLong: function() {
-            return this.get('geometry');
+        getTime: function() {
+            return new Date(this.get('properties').time);
         }
+
+
     });
 });
