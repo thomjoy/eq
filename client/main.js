@@ -54,6 +54,10 @@ define([
     // fetch all the models
     $.when( points.fetch({reset: true}) ).done(function() {
         console.log(points.length + ' points found');
+        $('#metadata')
+            .html(h.parseFeedMetaData(points.metadata))
+            .slideDown();
+
         plotCircles(points);
     });
 
