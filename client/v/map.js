@@ -66,8 +66,10 @@ define([
                     circle.attributes.kill(); // remove from map and the collection
                 });
 
-                this.circleCollection.length = 0;
-                this.circleCollection.models.length = 0;
+                //this.circleCollection.length = 0;
+                //this.circleCollection.models.length = 0;
+
+                // i don't love this...
                 this.circleCollection.reset();
             }
 
