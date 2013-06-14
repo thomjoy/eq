@@ -38,6 +38,7 @@ body { height: 100%; margin: 0; }
 .meta-title { color: #ddd; display: inline-block; margin-left: 4px; text-shadow: 0px 0px 1px #333; }
 .meta-tile:first-letter { text-transform: capitalize; }
 .meta-value { color: #fff; display: inline-block; margin-left: 4px; text-shadow: 0px 0px 1px #333; }
+
 #quakes {
     list-style-type: none;
     margin: 0;
