@@ -7,15 +7,15 @@ define(['backbone'],function(Backbone) {
         },
 
         initialize: function() {
-            console.log('Router is Ready');
+            //console.log('Router is Ready');
         },
 
         root: function() {
-            console.log('/');
+            //console.log('/');
         },
 
         test: function() {
-            console.log('/test?');
+            //console.log('/test?');
         }
    });
 });

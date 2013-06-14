@@ -27,6 +27,34 @@ define([
 
         comparator: function(m) {
             return -m.get('properties').mag;
+        },
+
+        getPeriod: function(params) {
+            var newUrl = 'http://localhost:8080/all/' + params.period;
+            this.url = newUrl;
+            console.log(params.period + ': ' + this.url);
+                    
+            // weird
+            this.reset();
+            this.fetch({reset: true});
+        },
+
+        // temp
+        parseFeedMetaData: function() {
+            var outStr = '';
+            _.each(_.pairs(this.metadata), function(tuple) {
+                var key = tuple[0],
+                    val = tuple[1];
+
+                if( _.contains(['status', 'url'], key) ) return;
+                if( key === 'generated' ) {
+                    val = new Date(val).toString();
+                }
+
+                outStr += '<span class="meta-title">' + key + ':</span>' +
+                '<span class="meta-value">' + val + '</span> ';
+            });
+            return outStr;
         }
 
         //localStorage: new Backbone.LocalStorage("Points")

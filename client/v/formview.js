@@ -29,7 +29,9 @@ define([
             var selectId = $(evt.currentTarget).attr('id'),
                 period = $('#' + selectId + ' option:selected').data('period');
             console.log(period);
-            this.vent.trigger('period:change', {period: period});
+            //this.vent.trigger('period:change', {period: period});
+
+            this.collection.getPeriod({period: period, reset: true});
         }
     });
 });

@@ -27,24 +27,6 @@ define(['underscore'], function(_) {
             if( m >= 7.0 && m < 7.99 ) {
                 return "#FF0000";
             }
-        },
-
-        // this should probably be on the collection
-        parseFeedMetaData: function(metadata) {
-            var outStr = '';
-            _.each(_.pairs(metadata), function(tuple) {
-                var key = tuple[0],
-                    val = tuple[1];
-
-                if( _.contains(['status', 'url'], key) ) return;
-                if( key === 'generated' ) {
-                    val = new Date(val).toString();
-                }
-
-                outStr += '<span class="meta-title">' + key + ':</span>' +
-                '<span class="meta-value">' + val + '</span> ';
-            });
-            return outStr;
         }
     };
 });

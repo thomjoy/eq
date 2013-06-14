@@ -26,6 +26,12 @@ define(['gmaps', 'backbone', 'templates'], function(gmaps, Backbone, templates) 
                 infoWindow.setPosition(evt.latLng);
                 infoWindow.open(_this.map);
             });
+        },
+
+        // remove the circle from the actual gmap
+        kill: function() {
+            this.mapCircle.setMap(null);
+            this.remove();
         }
     });
 });
