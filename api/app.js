@@ -10,8 +10,8 @@ var headers = {
     'Access-Control-Allow-Headers': '*'
 };
 
-api.get('/all/now', function(req, res){
-    console.log('/all/now' + ' ' + req.headers.referer);
+api.get('/all/hour', function(req, res){
+    console.log('/all/hour' + ' ' + req.headers.referer);
     allHourReq = function( response ) {
         var str = '';
 
@@ -85,7 +85,7 @@ api.get('/all/week', function(req, res) {
     http.request(options, allWeekReq).end();
 });
 
-api.get('all/month', function(req, res) {
+api.get('/all/month', function(req, res) {
     console.log('/all/month' + ' ' + req.headers.referer);
     allMonthReq = function( response ) {
         var str = '';

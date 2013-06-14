@@ -8,7 +8,7 @@ define([
     return Backbone.Collection.extend({
         model: Quake,
 
-        url: 'http://localhost:8080/all/week',
+        url: 'http://localhost:8080/all/day',
 
         initialize: function() {
             _.extend(this, this.options);
