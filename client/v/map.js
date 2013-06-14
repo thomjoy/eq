@@ -56,25 +56,25 @@ define([
         plotCircles: function() {
 
             this.$el.addClass('blur');
-
-            
             var _this = this;
 
             // remove all the previous references
             if( this.circleCollection.length > 0 ) {
-                 
                 // weird, as each 'circle' is a model that references
                 // a gmapcircle view...
                 _.each(this.circleCollection.models, function(circle) {
                     circle.attributes.kill(); // remove from map and the collection
                 });
+
+                this.circleCollection.length = 0;
+                this.circleCollection.models.length = 0;
+                this.circleCollection.reset();
             }
 
             // move this into view
             $('#metadata')
                 .html(this.collection.parseFeedMetaData())
                 .slideDown();
-            //this.circleCollection.reset();
 
             console.log('Map updating');
             console.log(this.collection.length + ' points found');

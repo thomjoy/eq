@@ -22,7 +22,7 @@ define([
 
         parse: function(data) {
             this.metadata = data.metadata;
-            return data.features;s
+            return data.features;
         },
 
         comparator: function(m) {
@@ -33,9 +33,12 @@ define([
             var newUrl = 'http://localhost:8080/all/' + params.period;
             this.url = newUrl;
             console.log(params.period + ': ' + this.url);
-                    
+            
             // weird
-            this.reset();
+            //this.models.length = null;
+            //console.log('length is: ' + this.models.length);
+            this.models.length = 0;
+            //console.log('after destroy, length is: ' + this.models.length);
             this.fetch({reset: true});
         },
 
@@ -55,6 +58,11 @@ define([
                 '<span class="meta-value">' + val + '</span> ';
             });
             return outStr;
+        },
+
+        // get timevalue extremes
+        getStartEnd: function() {
+
         }
 
         //localStorage: new Backbone.LocalStorage("Points")
