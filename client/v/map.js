@@ -58,14 +58,29 @@ define([
                     clearInterval(interval);
                     return;
                 }
-                //console.log('-webkit-filter', 'blur(' + blurVal + 'px)');
+                console.log('-webkit-filter', 'blur(' + blurVal + 'px)');
 
             }.bind(this), 50);
         },
 
         addLoadingBlur: function() {
-            this.$el.addClass('blur');
-            this.$el.css('-webkit-filter', 'blur(8px)');
+            var interval = setInterval(function step() {
+                var blurString = this.$el.css('-webkit-filter'),
+                    blurVal = blurString.match(/\d+/g)[0];
+
+                if( blurVal && blurVal < 8 ) {
+                    blurVal++;
+                    this.$el.css('-webkit-filter', 'blur(' + blurVal + 'px)');
+                }
+                else {
+                    //this.$el.css('-webkit-filter', '');
+                    this.$el.addClass('blur');
+                    clearInterval(interval);
+                    return;
+                }
+                console.log('-webkit-filter', 'blur(' + blurVal + 'px)');
+
+            }.bind(this), 10);
         },
 
         plotCircles: function() {

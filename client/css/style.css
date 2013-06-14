@@ -9,13 +9,13 @@ body { height: 100%; margin: 0; }
 }
 
 .no-blur { -webkit-filter: blur(0px); }
-#map { overflow: hidden; height: 90% }
+#map { overflow: hidden; height: 90%; border-bottom: 1px solid #aaa; }
 
 #interact-form {
     height: 28px;
     padding-top: 3px;
     padding-bottom: 3px;
-    border-top: 1px solid #aaa;
+    position: fixed;
 }
     
 #interact-form input {
@@ -33,7 +33,6 @@ body { height: 100%; margin: 0; }
     width: 100%;
     padding-top: 4px;
     padding-bottom: 4px;
-    position: fixed;
 }
 
 .meta-title { color: #ddd; display: inline-block; margin-left: 4px; text-shadow: 0px 0px 1px #333; }
