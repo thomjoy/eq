@@ -23,6 +23,8 @@ define([
             this.listenTo(this.collection, 'reset', this.plotCircles);
 
             this.circleCollection = new Backbone.Collection();
+
+            this.collection.fetch({reset: true});
         },
 
         navToLatLng: function(coords) {
@@ -55,7 +57,7 @@ define([
 
             this.$el.addClass('blur');
 
-            console.log('Map updating');
+            
             var _this = this;
 
             // remove all the previous references
@@ -68,7 +70,14 @@ define([
                 });
             }
 
+            // move this into view
+            $('#metadata')
+                .html(this.collection.parseFeedMetaData())
+                .slideDown();
             //this.circleCollection.reset();
+
+            console.log('Map updating');
+            console.log(this.collection.length + ' points found');
 
             // go through the new collection
             this.collection.models.forEach(function(p) {

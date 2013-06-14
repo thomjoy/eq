@@ -1,4 +1,4 @@
-define(['templates'], function(templates) {
+define(['templates', 'backbone'], function(templates, Backbone) {
     return Backbone.View.extend({
         tagName: 'ul',
 

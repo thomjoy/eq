@@ -51,13 +51,4 @@ define([
         collection: points,
         vent: vent
     });
-
-
-    // fetch all the models
-    $.when( points.fetch({reset: true}) ).done(function() {
-        console.log(points.length + ' points found');
-        $('#metadata')
-            .html(points.parseFeedMetaData())
-            .slideDown();
-    });
 });
