@@ -2,7 +2,8 @@ define(['backbone'],function(Backbone) {
    return Backbone.Router.extend({
 
         routes: {
-            '': 'root'
+            '': 'root',
+            'test': 'test'
         },
 
         initialize: function() {
@@ -11,6 +12,10 @@ define(['backbone'],function(Backbone) {
 
         root: function() {
             console.log('/');
+        },
+
+        test: function() {
+            console.log('/test?');
         }
    });
 });

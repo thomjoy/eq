@@ -38,7 +38,9 @@ define([
     'use strict';
 
     var appRouter = new Router();
-    Backbone.history.start({pushState: true, root: "/client/"})
+
+    // {root: "/client/"}
+    Backbone.history.start({ pushState: true });
 
     var EA = {};
         EA.all = _.clone(Backbone.Events);
