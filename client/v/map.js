@@ -47,24 +47,31 @@ define([
             var interval = setInterval(function step() {
                 var blurString = this.$el.css('-webkit-filter'),
                     blurVal = blurString.match(/\d+/g)[0];
+
                 if( blurVal && blurVal > 0 ) {
                     blurVal--;
                     this.$el.css('-webkit-filter', 'blur(' + blurVal + 'px)');
                 }
                 else {
+                    //this.$el.css('-webkit-filter', '');
                     this.$el.removeClass('blur');
                     clearInterval(interval);
                     return;
                 }
+                console.log('-webkit-filter', 'blur(' + blurVal + 'px)');
+
             }.bind(this), 75);
         },
 
         addLoadingBlur: function() {
             this.$el.addClass('blur');
+            this.$el.css('-webkit-filter', 'blur(8px)');
         },
 
         plotCircles: function() {
             var _this = this;
+
+            this.addLoadingBlur();
 
             // remove all the previous references
             if( this.circleCollection.length > 0 ) {
