@@ -31,15 +31,12 @@ define(['underscore'], function(_) {
 
         // this should probably be on the collection
         parseFeedMetaData: function(metadata) {
-            console.log(metadata);
             var outStr = '';
-
             _.each(_.pairs(metadata), function(tuple) {
                 var key = tuple[0],
                     val = tuple[1];
 
                 if( _.contains(['status', 'url'], key) ) return;
-
                 if( key === 'generated' ) {
                     val = new Date(val).toString();
                 }
