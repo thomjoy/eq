@@ -22,8 +22,12 @@ define([
             this.listenTo(this.vent, 'map:navto', this.navToLatLng);
             this.listenTo(this.collection, 'reset', this.plotCircles);
 
+            // holds the Google Map Circle Views
+            // actually its like Collection -> Model -> View
+            // need to find a better way to do this.
             this.circleCollection = new Backbone.Collection();
 
+            // fire off a request for some data...
             this.collection.fetch({reset: true});
         },
 
