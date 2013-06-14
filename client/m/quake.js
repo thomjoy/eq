@@ -11,7 +11,5 @@ define(['backbone'], function(Backbone) {
         getTime: function() {
             return new Date(this.get('properties').time);
         }
-
-
     });
 });

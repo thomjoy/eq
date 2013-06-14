@@ -1,10 +1,4 @@
-define([
-    'backbone',
-    'templates'
-], function(
-    Backbone,
-    t
-){
+define(['backbone', 'templates'], function(Backbone, templates){
     return Backbone.View.extend({
         id: 'interact-form',
 
@@ -21,16 +15,14 @@ define([
 
         render: function() {
             this.$el
-                .html(_.template(t.form))
+                .html(_.template(templates.form))
                 .appendTo('body');
         },
 
         changeTest: function(evt) {
             var selectId = $(evt.currentTarget).attr('id'),
                 period = $('#' + selectId + ' option:selected').data('period');
-            console.log(period);
             //this.vent.trigger('period:change', {period: period});
-
             this.collection.getPeriod({period: period, reset: true});
         }
     });

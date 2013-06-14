@@ -1,9 +1,9 @@
 define([
-    'backbone',
-    'm/quake'
+    'm/quake',
+    'xdate'
 ], function(
-    Backbone,
-    Quake
+    Quake,
+    XDate
 ){
     return Backbone.Collection.extend({
         model: Quake,
@@ -13,11 +13,9 @@ define([
         initialize: function() {
             _.extend(this, this.options);
             //this.listenTo(this.vent, 'period:change', this.getPeriod);
-        },
 
-        getPeriod: function(params) {
-            var period = params.period;
-            console.log('getPeriod got: ' + period);
+            this.start = new Date();
+            this.end = new Date();
         },
 
         parse: function(data) {
@@ -26,14 +24,13 @@ define([
         },
 
         comparator: function(m) {
-            return -m.get('properties').mag;
+            return m.get('properties').time;
         },
 
         getPeriod: function(params) {
-            var newUrl = 'http://localhost:8080/all/' + params.period;
-            this.url = newUrl;
+            this.url = 'http://localhost:8080/all/' + params.period;
             console.log(params.period + ': ' + this.url);
-            
+
             // weird
             //this.models.length = null;
             //console.log('length is: ' + this.models.length);
@@ -62,7 +59,9 @@ define([
 
         // get timevalue extremes
         getStartEnd: function() {
-
+            this.start = this.models[0].attributes.properties.time;
+            this.end = this.models[this.models.length-1].attributes.properties.time;
+            return { start: this.start, end: this.end };
         }
 
         //localStorage: new Backbone.LocalStorage("Points")

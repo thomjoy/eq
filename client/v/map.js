@@ -2,11 +2,13 @@
 define([
     'gmaps',
     'backbone',
+    'xdate',
     'h/helpers',
     'v/gmapcircle'
 ],function(
     gmaps,
     Backbone,
+    XDate,
     h,
     GoogleMapsCircleView
 ){
@@ -41,7 +43,7 @@ define([
         },
 
         // put this a web worker thread?
-        removeBlur: function() {
+        removeLoadingBlur: function() {
             var interval = setInterval(function step() {
                 var blurString = this.$el.css('-webkit-filter'),
                     blurVal = blurString.match(/\d+/g)[0];
@@ -57,9 +59,11 @@ define([
             }.bind(this), 75);
         },
 
-        plotCircles: function() {
-
+        addLoadingBlur: function() {
             this.$el.addClass('blur');
+        },
+
+        plotCircles: function() {
             var _this = this;
 
             // remove all the previous references
@@ -70,9 +74,6 @@ define([
                     circle.attributes.kill(); // remove from map and the collection
                 });
 
-                //this.circleCollection.length = 0;
-                //this.circleCollection.models.length = 0;
-
                 // i don't love this...
                 this.circleCollection.reset();
             }
@@ -82,8 +83,10 @@ define([
                 .html(this.collection.parseFeedMetaData())
                 .slideDown();
 
-            console.log('Map updating');
-            console.log(this.collection.length + ' points found');
+            console.log('Map updating... ' + this.collection.length + ' points found');
+            var extremes = this.collection.getStartEnd();
+            console.log(new XDate(extremes.start).toString('h:mm:ss, (MMM d, yyyy)'));
+            console.log(new XDate(extremes.end).toString('h:mm:ss, (MMM d, yyyy)'));
 
             // go through the new collection
             this.collection.models.forEach(function(p) {
@@ -114,12 +117,11 @@ define([
                 _this.circleCollection.add(c);
             });
 
-            this.removeBlur();
+            this.removeLoadingBlur();
         },
 
         render: function() {
-            var styleMapOptions = [
-            {
+            var styleMapOptions = [{
                 featureType: "all",
                 elementType: "all",
                 stylers: [
@@ -136,11 +138,10 @@ define([
                 }
             };
 
-            this.styledMap = new gmaps.StyledMapType(styleMapOptions, { name: "Grayscale" });  
+            this.styledMap = new gmaps.StyledMapType(styleMapOptions, { name: "Grayscale" });
             this.map = new gmaps.Map(this.el, mapOptions);
             this.map.mapTypes.set('mapStyle', this.styledMap);
             this.map.setMapTypeId('mapStyle');
-
             this.$el.appendTo('body');
         }
     });

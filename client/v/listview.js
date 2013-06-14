@@ -1,5 +1,7 @@
 define(['templates', 'backbone'], function(templates, Backbone) {
     return Backbone.View.extend({
+        id: 'quakes',
+
         tagName: 'ul',
 
         events: {

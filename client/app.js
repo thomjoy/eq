@@ -19,7 +19,8 @@ requirejs.config({
         underscore:                 'lib/underscore',
         backbone:                   'lib/backbone',
         'backbone.localstorage':    'lib/backbone.localstorage',
-        jquery:                     'lib/jquery-2.0.2.min'
+        jquery:                     'lib/jquery-2.0.2.min',
+        xdate:                      'lib/xdate'
     },
     shim: {
         underscore: {
@@ -36,5 +37,13 @@ requirejs.config({
     }
 });
 
+
+// Google Maps
+define('gmaps',
+    ['async!http://maps.googleapis.com/maps/api/js?key=AIzaSyDHkmCO0w9F0SR8BPsQ201QCfTCQATn1uU&sensor=false'],
+    function(){
+        return window.google.maps;
+    });
+
 // load the app.
-require(['main']);
+require(['backbone', 'templates', 'gmaps', 'main']);

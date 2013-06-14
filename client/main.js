@@ -1,16 +1,5 @@
-
-// Google Maps
-define(
-    'gmaps',
-    ['async!http://maps.googleapis.com/maps/api/js?key=AIzaSyDHkmCO0w9F0SR8BPsQ201QCfTCQATn1uU&sensor=false'],
-    function(){
-        return window.google.maps;
-    });
-
 // app.js
 define([
-    'gmaps',
-    'backbone',
     'r/router',
 
     'v/formview',
@@ -18,8 +7,6 @@ define([
     'v/listview',
     'm/points' // collection
 ], function(
-    gmaps,
-    Backbone,
     Router,
 
     FormView,
@@ -29,26 +16,39 @@ define([
 ){
     'use strict';
 
-    var appRouter = new Router();
+    // Legacy, to remove
+    var vent = _.clone(Backbone.Events),
+
+        // To be replaced by an application level
+        // Event Aggregator
+        EA = {
+            all: _.clone(Backbone.Events)
+        },
+
+        // application router
+        appRouter = new Router(),
+
+        // holds all the co-ordinates etc..
+        points = new PointsCollection(),
+
+        // holds the reference to the google maps
+        // div 'map canvas'
+        mapView = new GoogleMapView({
+            vent: vent,
+            collection: points
+        }),
+
+        // form with stuff in
+        formView = new FormView({
+            collection: points
+        }),
+
+        // simple list view of the geocode data
+        listView = new ListView({
+            collection: points,
+            vent: vent
+        });
 
     // {root: "/client/"}
     Backbone.history.start({ pushState: true });
-
-    var EA = {};
-        EA.all = _.clone(Backbone.Events);
-
-    var vent = _.clone(Backbone.Events);
-    var points = new PointsCollection();
-    var mapView = new GoogleMapView({
-        vent: vent,
-        collection: points
-    });
-    var formView = new FormView({
-        collection: points
-    });
-    var listView = new ListView({
-        id: 'quakes',
-        collection: points,
-        vent: vent
-    });
 });
