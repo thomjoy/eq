@@ -10,6 +10,10 @@ define([
 
         className: 'form',
 
+        events: {
+            'change #time-period-select': 'changeTest'
+        },
+
         initialize: function() {
             _.extend(this, this.options);
             this.render();
@@ -19,6 +23,13 @@ define([
             this.$el
                 .html(_.template(t.form))
                 .appendTo('body');
+        },
+
+        changeTest: function(evt) {
+            var selectId = $(evt.currentTarget).attr('id'),
+                period = $('#' + selectId + ' option:selected').data('period');
+            console.log(period);
+            this.vent.trigger('period:change', {period: period});
         }
     });
 });

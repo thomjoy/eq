@@ -12,6 +12,8 @@ define([
     'gmaps',
     'backbone',
 
+    'r/router',
+
     'h/helpers',
 
     'v/formview',
@@ -23,6 +25,8 @@ define([
     gmaps,
     Backbone,
 
+    Router,
+
     h,
 
     FormView,
@@ -33,6 +37,12 @@ define([
 ){
     'use strict';
 
+    var appRouter = new Router();
+    Backbone.history.start({pushState: true, root: "/client/"})
+
+    var EA = {};
+        EA.all = _.clone(Backbone.Events);
+
     var vent = _.clone(Backbone.Events);
 
     var mapView = new GoogleMapView({
@@ -40,8 +50,8 @@ define([
     });
 
     var formView = new FormView();
-
     var points = new PointsCollection();
+
     var circleCollection = new Backbone.Collection();
 
     // list

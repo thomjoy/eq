@@ -11,12 +11,18 @@ define([
         url: 'http://localhost:8080/all/week',
 
         initialize: function() {
-            //this.fetch();
+            _.extend(this, this.options);
+            //this.listenTo(this.vent, 'period:change', this.getPeriod);
+        },
+
+        getPeriod: function(params) {
+            var period = params.period;
+            console.log('getPeriod got: ' + period);
         },
 
         parse: function(data) {
             this.metadata = data.metadata;
-            return data.features;
+            return data.features;s
         },
 
         comparator: function(m) {
