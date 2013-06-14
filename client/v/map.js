@@ -58,9 +58,9 @@ define([
                     clearInterval(interval);
                     return;
                 }
-                console.log('-webkit-filter', 'blur(' + blurVal + 'px)');
+                //console.log('-webkit-filter', 'blur(' + blurVal + 'px)');
 
-            }.bind(this), 75);
+            }.bind(this), 50);
         },
 
         addLoadingBlur: function() {
