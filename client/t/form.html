@@ -1,9 +1,12 @@
 <form class="pure-form">
-    <input id='search' type='text' placeholder="search" />
+    <input id="search" type="text" placeholder="search" />
     <select id='time-period-select'>
         <option data-period="month">All Month</option>
         <option data-period="week">All Week</option>
         <option data-period="day" selected="selected">All Day</option>
         <option data-period="hour">All Hour</option>
+    </select>
+    <select id="filter-mag">
+        <% _.each(_.range(0, 10), function(i) { %> <option data-mag="<%= i %>"><%= i %></option> <% }); %>;
     </select>
 </form>
