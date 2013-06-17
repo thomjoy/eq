@@ -38,29 +38,27 @@ define([
             this.fetch({reset: true});
         },
 
-        // temp
-        parseFeedMetaData: function() {
-            var outStr = '';
-            _.each(_.pairs(this.metadata), function(tuple) {
-                var key = tuple[0],
-                    val = tuple[1];
-
-                if( _.contains(['status', 'url'], key) ) return;
-                if( key === 'generated' ) {
-                    val = new Date(val).toString();
-                }
-
-                outStr += '<span class="meta-title">' + key + ':</span>' +
-                '<span class="meta-value">' + val + '</span> ';
-            });
-            return outStr;
-        },
-
         // get timevalue extremes
         getStartEnd: function() {
             this.start = this.models[0].attributes.properties.time;
             this.end = this.models[this.models.length-1].attributes.properties.time;
             return { start: this.start, end: this.end };
+        },
+
+        filterByMag: function(params) {
+            var minimum = params.mag,
+                filteredList;
+            // lame, we shouldn't have to reset the collection here...
+            // or re-fetch this data
+            //$.when( this.fetch({reset: false}) ).done(function() {
+                filteredList = _.filter(this.models, function(quake) {
+                    return quake.attributes.properties.mag >= minimum;
+                });
+
+                //this.reset(filteredList);
+            //}.bind(this));
+            console.log(filteredList.length + ' models with mag >= ' + minimum);
+            return new Backbone.Collection(filteredList);
         }
 
         //localStorage: new Backbone.LocalStorage("Points")

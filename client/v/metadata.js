@@ -10,7 +10,7 @@ define(['backbone', 'templates'], function(Backbone, templates) {
         },
 
         render: function() {
-            this.$el.prependTo('body');
+            this.$el.prependTo('#controls');
         },
 
         update: function() {

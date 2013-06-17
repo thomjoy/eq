@@ -23,6 +23,8 @@ define([
 
             this.listenTo(this.vent, 'map:navto', this.navToLatLng);
             this.listenTo(this.collection, 'reset', this.plotCircles);
+            this.listenTo(this.collection, 'add', this.plotCircles);
+            this.listenTo(this.collection, 'remove', this.plotCircles);
 
             // holds the Google Map Circle Views
             // actually its like Collection -> Model -> View
@@ -147,7 +149,7 @@ define([
                 center: new gmaps.LatLng(38.8442, -122.7555),
                 disableDefaultUI: false,
                 mapTypeControlOptions: {
-                    mapTypeIds: [gmaps.MapTypeId.ROADMAP, 'mapStyle']
+                    mapTypeIds: [gmaps.MapTypeId.ROADMAP, gmaps.MapTypeId.TERRAIN, 'mapStyle']
                 }
             };
 
