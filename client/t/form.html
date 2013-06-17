@@ -1,14 +1,17 @@
-<form class="pure-form">
-    <input id="search" type="text" placeholder="search" />
-    <label for="time-period-select">Period</label>
-    <select id='time-period-select'>
-        <option data-period="month">All Month</option>
-        <option data-period="week">All Week</option>
-        <option data-period="day" selected="selected">All Day</option>
-        <option data-period="hour">All Hour</option>
-    </select>
-    <label for="filter-mag">Magnitude</label>
-    <select id="filter-mag">
-        <% _.each(_.range(0, 10), function(i) { %> <option data-mag="<%= i %>"><%= i %></option> <% }); %>;
-    </select>
+<form class="form-inline">
+    <div class="controls" class="span3">
+        <label class="control-label" for="time-period-select">Period</label>
+        <select class="span2"> id='time-period-select'>
+            <option data-period="month">All Month</option>
+            <option data-period="week">All Week</option>
+            <option data-period="day" selected="selected">All Day</option>
+            <option data-period="hour">All Hour</option>
+        </select>
+    </div>
+    <div class="controls" class="span2">
+        <label class="control-label" for="filter-mag">Magnitude</label>
+        <select class="span1" id="filter-mag">
+            <% _.each(_.range(0, 9), function(i) { %> <option data-mag="<%= i %>"><%= i %></option> <% }); %>;
+        </select>
+    </div>
 </form>

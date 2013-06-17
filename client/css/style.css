@@ -1,4 +1,4 @@
-* { /*font-family: proxima-nova;*/ font-family: 'Lato', sans-serif; }
+/* { font-family: proxima-nova; font-family: 'Lato', sans-serif; } */
 html { height: 100% }
 body { height: 100%; margin: 0; }
 
@@ -29,7 +29,7 @@ body { height: 100%; margin: 0; }
     border-bottom: 1px solid #333;
 }
 
-#metadata h3 { margin: 0; margin-left: 12px; margin-right: 12px; color: #fefefe; text-shadow: 0px 0px 1px #333; float: left; font-size: 14px; }
+#metadata h3 { line-height: 18px; margin: 0; margin-left: 12px; margin-right: 12px; color: #fefefe; text-shadow: 0px 0px 1px #333; float: left; font-size: 14px; }
 #metadata p { margin: 0; margin-right: 12px; color: #eee; text-shadow: 0px 0px 1px #333; float: left; font-size: 14px; }
 #metadata a { color: #eee; text-decoration: none; font-size: 12px;}
 
@@ -43,9 +43,10 @@ body { height: 100%; margin: 0; }
     background: -webkit-linear-gradient(top, #fff 0%,#fcfcfc 100%);
 }
 
-#interact-form label { color: #333; font-size: 12px; font-weight: normal; margin-left: 12px; margin-right: 4px; }
-#interact-form {  }
-#interact-form input[type='text'] { display: none; }
+#interact-form form div { margin-right: 24px; margin-left: 12px; }
+#interact-form form select { height: 22px; padding: 2px; }
+#interact-form form div { float: left; }
+#interact-form form label { margin-right: 2px; }
 
 #quakes {
     list-style-type: none;

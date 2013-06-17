@@ -2,8 +2,6 @@ define(['backbone', 'templates'], function(Backbone, templates){
     return Backbone.View.extend({
         id: 'interact-form',
 
-        className: 'form',
-
         events: {
             'change #time-period-select': 'changePeriod',
             'change #filter-mag': 'filterMag'
