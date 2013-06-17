@@ -23,6 +23,7 @@ define([
 
             this.listenTo(this.vent, 'map:navto', this.navToLatLng);
             this.listenTo(this.collection, 'reset', this.plotCircles);
+            this.listenTo(this.collection, 'request', this.addLoadingBlur);
             
             // holds the Google Map Circle Views
             // actually its like Collection -> Model -> View
@@ -83,8 +84,6 @@ define([
             var _this = this,
                 collection = this.collection,
                 extremes = collection.getStartEnd();
-
-            this.addLoadingBlur();
 
             console.log('Map updating... ' + collection.length + ' points found');
 

@@ -64,6 +64,9 @@ define([
             });
 
             console.log(c.length);
+            this.models.length = 0;
+
+            this.reset(c);
         },
 
         groupByMag: function() {
