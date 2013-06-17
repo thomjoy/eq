@@ -40,7 +40,6 @@ define(['backbone', 'templates', 'xdate'], function(Backbone, templates, XDate){
                 value = $('#' + selectId).val();
 
             this.collection.filterByTime({upTo: value});
-            //console.log(new XDate(+value).toString('h:mm:ss, (MMM d, yyyy)'));
         },
 
         addExtremes: function() {
