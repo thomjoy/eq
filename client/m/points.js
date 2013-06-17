@@ -15,10 +15,6 @@ define([
 
         initialize: function() {
             _.extend(this, this.options);
-            //this.listenTo(this.vent, 'period:change', this.getPeriod);
-
-            // stores the filtered models
-            this.filtered = new Backbone.Collection();
         },
 
         parse: function(data) {
@@ -32,6 +28,8 @@ define([
 
         getPeriod: function(params) {
             this.url = 'http://localhost:8080/all/' + params.period;
+
+            // reset everything
             this.models.length = 0;
 
             // re-fetch the collection
@@ -53,14 +51,15 @@ define([
             // lame, we shouldn't have to reset the collection here...
             // or re-fetch this data
             //$.when( this.fetch({reset: false}) ).done(function() {
-            this.filtered.set(_.filter(this.models, function(quake) {
+            this.filtered.reset(_.filter(this.models, function(quake) {
                 return quake.attributes.properties.mag >= minimum;
             }));
-
-            //this.collection.set(filteredList);
-            //}.bind(this));
             console.log(this.filtered.length + ' models with mag >= ' + minimum);
         },
+
+        groupByMag: function() {
+            return _.groupBy(this.models, function(m){ return Math.floor(m.attributes.properties.mag); });
+        }
 
         //localStorage: (new Backbone.LocalStorage("Points"))
     });

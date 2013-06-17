@@ -23,9 +23,7 @@ define([
 
             this.listenTo(this.vent, 'map:navto', this.navToLatLng);
             this.listenTo(this.collection, 'reset', this.plotCircles);
-
-            this.listenTo(this.collection.filtered, 'reset', this.plotCircles);
-
+            
             // holds the Google Map Circle Views
             // actually its like Collection -> Model -> View
             // need to find a better way to do this.
@@ -82,9 +80,13 @@ define([
         },
 
         plotCircles: function() {
-            var _this = this;
+            var _this = this,
+                collection = this.collection,
+                extremes = collection.getStartEnd();
 
             this.addLoadingBlur();
+
+            console.log('Map updating... ' + collection.length + ' points found');
 
             // remove all the previous references
             if( this.circleCollection.length > 0 ) {
@@ -98,14 +100,8 @@ define([
                 this.circleCollection.reset();
             }
 
-            console.log('Map updating... ' + this.collection.length + ' points found');
-
-            var extremes = this.collection.getStartEnd();
-            console.log('Start: ' + new XDate(extremes.start).toString('h:mm:ss, (MMM d, yyyy)'));
-            console.log('End: ' + new XDate(extremes.end).toString('h:mm:ss, (MMM d, yyyy)'));
-
             // go through the new collection
-            this.collection.models.forEach(function(p) {
+            _.each(collection.models, function(p) {
                 var point = p.attributes,
                     pos = new gmaps.LatLng(
                         +point.geometry.coordinates[1],
@@ -124,14 +120,14 @@ define([
                         strokeColor: 'transparent',
                         fillColor: h.magToColour(properties.mag),
                         fillOpacity: 0.4,
-                        map: _this.map,
+                        map: this.map,
                         center: pos,
                         radius: 10000 * properties.mag
                     }
                 });
 
-                _this.circleCollection.add(c);
-            });
+                this.circleCollection.add(c);
+            }.bind(this));
 
             this.removeLoadingBlur();
         },

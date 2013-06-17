@@ -3,19 +3,23 @@ define(['backbone'],function(Backbone) {
 
         routes: {
             '': 'root',
-            'test': 'test'
-        },
-
-        initialize: function() {
-            //console.log('Router is Ready');
+            'test': 'test',
+            'month': 'month',
+            'week': 'week',
+            'day': 'day',
+            'hour': 'hour'
         },
 
         root: function() {
-            //console.log('/');
+            console.log('/');
         },
 
         test: function() {
             //console.log('/test?');
+        },
+
+        week: function(params) {
+            console.log('/week');
         }
    });
 });
