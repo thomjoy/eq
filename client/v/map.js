@@ -21,14 +21,23 @@ define([
             _.extend(this, this.options);
             this.render();
 
-            this.listenTo(this.vent, 'map:navto', this.navToLatLng);
-            this.listenTo(this.collection, 'reset', this.plotCircles);
-            this.listenTo(this.collection, 'request', this.addLoadingBlur);
-            
             // holds the Google Map Circle Views
             // actually its like Collection -> Model -> View
             // need to find a better way to do this.
             this.circleCollection = new Backbone.Collection();
+
+            // represents the current state of the collection in the view
+            this.viewModel = new Backbone.Collection();
+
+            this.listenTo(this.vent, 'map:navto', this.navToLatLng);
+            this.listenTo(this.collection, 'request', this.addLoadingBlur);
+            this.listenTo(this.collection, 'reset', this.updateVM);
+
+            this.listenTo(this.vent, 'vm:update', this.updateVM);
+
+            this.listenTo(this.viewModel, 'reset', this.plotCircles);
+            //this.listenTo(this.viewModel, 'add', this.plotCircles);
+            //this.listenTo(this.viewModel, 'remove', this.plotCircles);
 
             // fire off a request for some data...
             this.collection.fetch({reset: true});
@@ -41,6 +50,12 @@ define([
 
         getMap: function() {
             return this.map;
+        },
+
+        updateVM: function(params) {
+            var models = params.models ? params.models : this.collection.models;
+            this.viewModel.reset(models);
+            console.log("VM: " + this.viewModel.length);
         },
 
         // put this a web worker thread?
@@ -72,7 +87,6 @@ define([
                     this.$el.css('-webkit-filter', 'blur(' + blurVal + 'px)');
                 }
                 else {
-                    //this.$el.css('-webkit-filter', '');
                     this.$el.addClass('blur');
                     clearInterval(interval);
                     return;
@@ -81,11 +95,9 @@ define([
         },
 
         plotCircles: function() {
-            var _this = this,
-                collection = this.collection,
-                extremes = collection.getStartEnd();
+            var _this = this;
 
-            console.log('Map updating... ' + collection.length + ' points found');
+            console.log('Map updating... ' + this.collection.length + ' points found');
 
             // remove all the previous references
             if( this.circleCollection.length > 0 ) {
@@ -100,7 +112,7 @@ define([
             }
 
             // go through the new collection
-            _.each(collection.models, function(p) {
+            _.each(this.viewModel.models, function(p) {
                 var point = p.attributes,
                     pos = new gmaps.LatLng(
                         +point.geometry.coordinates[1],

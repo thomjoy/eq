@@ -53,7 +53,8 @@ define([
 
         // form with stuff in
         formView = new FormView({
-            collection: points
+            collection: points,
+            vent: vent
         }),
 
         // simple list view of the geocode data

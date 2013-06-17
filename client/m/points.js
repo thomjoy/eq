@@ -15,6 +15,9 @@ define([
 
         initialize: function() {
             _.extend(this, this.options);
+
+            this.start = 0;
+            this.end = 0;
         },
 
         parse: function(data) {
@@ -50,7 +53,6 @@ define([
 
             // lame, we shouldn't have to reset the collection here...
             // or re-fetch this data
-            //$.when( this.fetch({reset: false}) ).done(function() {
             this.filtered.reset(_.filter(this.models, function(quake) {
                 return quake.attributes.properties.mag >= minimum;
             }));
@@ -59,14 +61,12 @@ define([
 
         filterByTime: function(params) {
             var maxTime = params.upTo;
-            var c = _.filter(this.models, function(quake) {
+
+            var f = _.filter(this.models, function(quake) {
                 return quake.attributes.properties.time <= maxTime;
             });
-
-            console.log(c.length);
-            this.models.length = 0;
-
-            this.reset(c);
+            console.log(f.length);
+            return f;
         },
 
         groupByMag: function() {

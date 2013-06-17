@@ -17,6 +17,7 @@ define(['backbone', 'templates', 'xdate'], function(Backbone, templates, XDate){
 
         render: function() {
             this.$el
+                .hide()
                 .html(_.template(templates.form))
                 .appendTo('#header');
         },
@@ -38,18 +39,22 @@ define(['backbone', 'templates', 'xdate'], function(Backbone, templates, XDate){
         filterRange: function(evt) {
             var selectId = $(evt.currentTarget).attr('id'),
                 value = $('#' + selectId).val();
-
-            this.collection.filterByTime({upTo: value});
+            
+            var c = this.collection.filterByTime({upTo: value});
+            this.vent.trigger('vm:update', {models: c});
         },
 
         addExtremes: function() {
-            var min = this.collection.start,
-                max = this.collection.end;
-
+            var d = this.collection.getStartEnd();
             this.$('#filter-range')
-                .attr('value', min)
-                .attr('min', min)
-                .attr('max', max);
+                .attr('value', d.start)
+                .attr('min', d.start)
+                .attr('max', d.end);
+
+            var start = this.$('#start-label').html(new XDate(d.start).toString('h:mm:ss, (MMM d, yyyy)'));
+            var end = this.$('#end-label').html(new XDate(d.end).toString('h:mm:ss, (MMM d, yyyy)'));
+
+            this.$el.slideDown();
         }
     });
 });

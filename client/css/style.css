@@ -2,7 +2,7 @@
 html { height: 100% }
 body { height: 100%; margin: 0; }
 
-#map { overflow: hidden; top: 62px; height: 90%; border-bottom: 1px solid #aaa; border-bottom: 1px solid #eee; }
+#map { overflow: hidden; top: 61px; height: 90%; border-bottom: 1px solid #aaa; border-bottom: 1px solid #eee; }
 .container { position: relative; }
 
 /* Controls */
@@ -49,6 +49,9 @@ body { height: 100%; margin: 0; }
 #interact-form form select { height: 22px; padding: 2px; }
 #interact-form form div { float: left; }
 #interact-form form label { margin-right: 2px; }
+
+
+#start-label, #end-label { color: #888; font-size: 12px; }
 
 #quakes {
     list-style-type: none;
