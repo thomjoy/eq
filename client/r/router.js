@@ -11,7 +11,7 @@ define(['backbone'],function(Backbone) {
         },
 
         root: function() {
-            console.log('/');
+            //console.log('/');
         },
 
         test: function() {

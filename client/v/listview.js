@@ -26,7 +26,7 @@ define(['templates', 'backbone'], function(templates, Backbone) {
             // insert the new nodes
             this.$el
                 .html(this.renderListAsString(this.collection.models))
-                .appendTo('body');
+                .prependTo('#main');
         },
 
         renderListAsString: function(list) {

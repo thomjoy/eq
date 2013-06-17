@@ -41,7 +41,7 @@ define(['backbone', 'templates', 'xdate'], function(Backbone, templates, XDate){
                 value = $('#' + selectId).val();
             
             var c = this.collection.filterByTime({upTo: value});
-            this.vent.trigger('vm:update', {models: c});
+            this.vent.trigger('vm:update', {date: value, models: c});
         },
 
         addExtremes: function() {

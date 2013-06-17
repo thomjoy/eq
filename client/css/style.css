@@ -2,7 +2,7 @@
 html { height: 100% }
 body { height: 100%; margin: 0; }
 
-#map { overflow: hidden; top: 61px; height: 90%; border-bottom: 1px solid #aaa; border-bottom: 1px solid #eee; }
+#map { overflow: hidden; top: 61px; height: 90%; border-bottom: 1px solid #aaa; border-bottom: 1px solid #eee; clear: both; }
 .container { position: relative; }
 
 /* Controls */
@@ -50,17 +50,8 @@ body { height: 100%; margin: 0; }
 #interact-form form div { float: left; }
 #interact-form form label { margin-right: 2px; }
 
-
 #start-label, #end-label { color: #888; font-size: 12px; }
-
-#quakes {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 50%;
-    float: right;
-    overflow: hidden;
-}
+#quakes { list-style-type: none; margin: 0; padding: 0; width: 100%; clear: both; overflow: hidden; }
 
 #quakes li { font-size: 12px; color: #666; border-bottom: 1px solid #eee; padding-top: 6px; padding-bottom: 6px; }
 #quakes li .mag { display: inline-block; margin-right: 8px; color: #333; }

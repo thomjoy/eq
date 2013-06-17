@@ -29,6 +29,8 @@ define([
             return -m.get('properties').time;
         },
 
+        // this should be moved out into a 'collection of collections'
+        // dynamically changing the url isn't great.
         getPeriod: function(params) {
             this.url = 'http://localhost:8080/all/' + params.period;
 
@@ -42,21 +44,19 @@ define([
         // get timevalue extremes
         getStartEnd: function() {
             if( !this.models[0] ) return {};
-
             this.start = this.models[this.models.length-1].attributes.properties.time;
             this.end = this.models[0].attributes.properties.time;
+
             return { start: this.start, end: this.end };
         },
 
         filterByMag: function(params) {
             var minimum = params.mag;
-
-            // lame, we shouldn't have to reset the collection here...
-            // or re-fetch this data
-            this.filtered.reset(_.filter(this.models, function(quake) {
-                return quake.attributes.properties.mag >= minimum;
-            }));
+                f = _.filter(this.models, function(quake) {
+                    return quake.attributes.properties.mag >= minimum;
+                });
             console.log(this.filtered.length + ' models with mag >= ' + minimum);
+            return f;
         },
 
         filterByTime: function(params) {
@@ -65,7 +65,6 @@ define([
             var f = _.filter(this.models, function(quake) {
                 return quake.attributes.properties.time <= maxTime;
             });
-            console.log(f.length);
             return f;
         },
 

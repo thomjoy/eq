@@ -31,13 +31,10 @@ define([
 
             this.listenTo(this.vent, 'map:navto', this.navToLatLng);
             this.listenTo(this.collection, 'request', this.addLoadingBlur);
-            this.listenTo(this.collection, 'reset', this.updateVM);
+            this.listenTo(this.collection, 'reset', this.initVM);
 
             this.listenTo(this.vent, 'vm:update', this.updateVM);
-
             this.listenTo(this.viewModel, 'reset', this.plotCircles);
-            //this.listenTo(this.viewModel, 'add', this.plotCircles);
-            //this.listenTo(this.viewModel, 'remove', this.plotCircles);
 
             // fire off a request for some data...
             this.collection.fetch({reset: true});
@@ -52,10 +49,22 @@ define([
             return this.map;
         },
 
+        initVM: function() {
+            this.viewModel.reset(this.collection.models);
+            console.log("VM reset: " + this.viewModel.length);
+        },
+
         updateVM: function(params) {
             var models = params.models ? params.models : this.collection.models;
-            this.viewModel.reset(models);
-            console.log("VM: " + this.viewModel.length);
+            this.viewModel.set(models);
+            
+            // todo: refactor
+            //this.plotCircles({update: true});
+            this.plotCircles();
+
+            var d = new XDate(+params.date).toString('h:mm:ss, (MMM d, yyyy)');
+            console.log('VM set: ' + this.viewModel.length + ' (' + d + ')');
+
         },
 
         // put this a web worker thread?
@@ -94,13 +103,11 @@ define([
             }.bind(this), 10);
         },
 
-        plotCircles: function() {
+        plotCircles: function(params) {
             var _this = this;
 
-            console.log('Map updating... ' + this.collection.length + ' points found');
-
             // remove all the previous references
-            if( this.circleCollection.length > 0 ) {
+            if( this.circleCollection.length > 0 && !params ) {
                 // weird, as each 'circle' is a model that references
                 // a gmapcircle view...
                 _.each(this.circleCollection.models, function(circle) {
