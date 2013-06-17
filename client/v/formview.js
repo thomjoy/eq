@@ -15,7 +15,7 @@ define(['backbone', 'templates'], function(Backbone, templates){
         render: function() {
             this.$el
                 .html(_.template(templates.form))
-                .appendTo('#controls');
+                .appendTo('#header');
         },
 
         changePeriod: function(evt) {

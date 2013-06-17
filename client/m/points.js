@@ -53,14 +53,13 @@ define([
             // lame, we shouldn't have to reset the collection here...
             // or re-fetch this data
             //$.when( this.fetch({reset: false}) ).done(function() {
-            this.filtered = _.filter(this.models, function(quake) {
+            this.filtered.set(_.filter(this.models, function(quake) {
                 return quake.attributes.properties.mag >= minimum;
-            });
+            }));
 
-            this.collection.set(filteredList);
+            //this.collection.set(filteredList);
             //}.bind(this));
-            console.log(filteredList.length + ' models with mag >= ' + minimum);
-            //return new Backbone.Collection(filteredList);
+            console.log(this.filtered.length + ' models with mag >= ' + minimum);
         }
 
         //localStorage: new Backbone.LocalStorage("Points")

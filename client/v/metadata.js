@@ -2,6 +2,8 @@ define(['backbone', 'templates'], function(Backbone, templates) {
     return Backbone.View.extend({
         id: 'metadata',
 
+        className: 'navbar navbar-fixed-top',
+
         initialize: function() {
             _.extend(this, this.options);
             this.render();
@@ -10,7 +12,7 @@ define(['backbone', 'templates'], function(Backbone, templates) {
         },
 
         render: function() {
-            this.$el.prependTo('#controls');
+            this.$el.prependTo('#header');
         },
 
         update: function() {
