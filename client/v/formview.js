@@ -39,7 +39,8 @@ define(['backbone', 'templates', 'xdate'], function(Backbone, templates, XDate){
             var selectId = $(evt.currentTarget).attr('id'),
                 value = $('#' + selectId).val();
 
-            console.log(new XDate(+value).toString('h:mm:ss, (MMM d, yyyy)'));
+            this.collection.filterByTime({upTo: value});
+            //console.log(new XDate(+value).toString('h:mm:ss, (MMM d, yyyy)'));
         },
 
         addExtremes: function() {

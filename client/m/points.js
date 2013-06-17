@@ -57,6 +57,15 @@ define([
             console.log(this.filtered.length + ' models with mag >= ' + minimum);
         },
 
+        filterByTime: function(params) {
+            var maxTime = params.upTo;
+            var c = _.filter(this.models, function(quake) {
+                return quake.attributes.properties.time <= maxTime;
+            });
+
+            console.log(c.length);
+        },
+
         groupByMag: function() {
             return _.groupBy(this.models, function(m){ return Math.floor(m.attributes.properties.mag); });
         }
