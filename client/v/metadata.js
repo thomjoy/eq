@@ -14,7 +14,10 @@ define(['backbone', 'templates'], function(Backbone, templates) {
         },
 
         update: function() {
-            this.$el.html(_.template(templates.metaData, this.collection.metadata));
+            var data = {
+                generated: new XDate(this.collection.metadata.generated).toString('h:mm:ss, (MMM d, yyyy)')
+            };
+            this.$el.html(_.template(templates.metaData, _.extend(this.collection.metadata, data)));
         }
     });
 });

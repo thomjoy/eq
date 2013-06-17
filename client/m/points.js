@@ -24,7 +24,7 @@ define([
         },
 
         comparator: function(m) {
-            return m.get('properties').time;
+            return -m.get('properties').time;
         },
 
         getPeriod: function(params) {
