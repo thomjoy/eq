@@ -22,7 +22,7 @@ define(['backbone', 'templates'], function(Backbone, templates){
             var selectId = $(evt.currentTarget).attr('id'),
                 period = $('#' + selectId + ' option:selected').data('period');
             //this.vent.trigger('period:change', {period: period});
-            this.collection.getPeriod({period: period, reset: true});
+            this.collection.getPeriod({period: period});
         },
 
         filterMag: function(evt) {

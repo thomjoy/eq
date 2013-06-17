@@ -23,7 +23,7 @@ define([
 
             this.listenTo(this.vent, 'map:navto', this.navToLatLng);
             this.listenTo(this.collection, 'reset', this.plotCircles);
-            
+
             this.listenTo(this.collection.filtered, 'reset', this.plotCircles);
 
             // holds the Google Map Circle Views
@@ -101,8 +101,8 @@ define([
             console.log('Map updating... ' + this.collection.length + ' points found');
 
             var extremes = this.collection.getStartEnd();
-            //console.log('Start: ' + new XDate(extremes.start).toString('h:mm:ss, (MMM d, yyyy)'));
-            //console.log('End: ' + new XDate(extremes.end).toString('h:mm:ss, (MMM d, yyyy)'));
+            console.log('Start: ' + new XDate(extremes.start).toString('h:mm:ss, (MMM d, yyyy)'));
+            console.log('End: ' + new XDate(extremes.end).toString('h:mm:ss, (MMM d, yyyy)'));
 
             // go through the new collection
             this.collection.models.forEach(function(p) {

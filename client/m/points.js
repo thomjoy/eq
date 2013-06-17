@@ -13,10 +13,7 @@ define([
         initialize: function() {
             _.extend(this, this.options);
             //this.listenTo(this.vent, 'period:change', this.getPeriod);
-
-            this.start = new Date();
-            this.end = new Date();
-
+            
             // stores the filtered models
             this.filtered = new Backbone.Collection();
         },
@@ -60,8 +57,8 @@ define([
             //this.collection.set(filteredList);
             //}.bind(this));
             console.log(this.filtered.length + ' models with mag >= ' + minimum);
-        }
+        },
 
-        //localStorage: new Backbone.LocalStorage("Points")
+        localStorage: new Backbone.LocalStorage("Points")
     });
 });
