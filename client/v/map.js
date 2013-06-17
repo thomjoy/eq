@@ -58,8 +58,6 @@ define([
                     clearInterval(interval);
                     return;
                 }
-                //console.log('-webkit-filter', 'blur(' + blurVal + 'px)');
-
             }.bind(this), 50);
         },
 
@@ -78,8 +76,6 @@ define([
                     clearInterval(interval);
                     return;
                 }
-                console.log('-webkit-filter', 'blur(' + blurVal + 'px)');
-
             }.bind(this), 10);
         },
 
@@ -99,11 +95,6 @@ define([
                 // i don't love this...
                 this.circleCollection.reset();
             }
-
-            // move this into view
-            $('#metadata')
-                .html(this.collection.parseFeedMetaData())
-                .slideDown();
 
             console.log('Map updating... ' + this.collection.length + ' points found');
             var extremes = this.collection.getStartEnd();

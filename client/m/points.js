@@ -29,7 +29,6 @@ define([
 
         getPeriod: function(params) {
             this.url = 'http://localhost:8080/all/' + params.period;
-            console.log(params.period + ': ' + this.url);
 
             // weird
             //this.models.length = null;

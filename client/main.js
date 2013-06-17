@@ -5,6 +5,8 @@ define([
     'v/formview',
     'v/map',
     'v/listview',
+    'v/metadata',
+
     'm/points' // collection
 ], function(
     Router,
@@ -12,6 +14,8 @@ define([
     FormView,
     GoogleMapView,
     ListView,
+    MetaDataView,
+
     PointsCollection
 ){
     'use strict';
@@ -30,6 +34,11 @@ define([
 
         // holds all the co-ordinates etc..
         points = new PointsCollection(),
+
+        // header, with titles etc...
+        metaDataView = new MetaDataView({
+            collection: points
+        }),
 
         // holds the reference to the google maps
         // div 'map canvas'
