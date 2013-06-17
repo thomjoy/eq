@@ -1,9 +1,12 @@
 define([
     'm/quake',
-    'xdate'
+    'xdate',
+    'backbone',
+    'backbone.localstorage'
 ], function(
     Quake,
-    XDate
+    XDate,
+    Backbone
 ){
     return Backbone.Collection.extend({
         model: Quake,
@@ -13,7 +16,7 @@ define([
         initialize: function() {
             _.extend(this, this.options);
             //this.listenTo(this.vent, 'period:change', this.getPeriod);
-            
+
             // stores the filtered models
             this.filtered = new Backbone.Collection();
         },
@@ -39,8 +42,8 @@ define([
         getStartEnd: function() {
             if( !this.models[0] ) return {};
 
-            this.start = this.models[0].attributes.properties.time;
-            this.end = this.models[this.models.length-1].attributes.properties.time;
+            this.start = this.models[this.models.length-1].attributes.properties.time;
+            this.end = this.models[0].attributes.properties.time;
             return { start: this.start, end: this.end };
         },
 
@@ -59,6 +62,6 @@ define([
             console.log(this.filtered.length + ' models with mag >= ' + minimum);
         },
 
-        localStorage: new Backbone.LocalStorage("Points")
+        //localStorage: (new Backbone.LocalStorage("Points"))
     });
 });

@@ -1,6 +1,7 @@
 requirejs.config({
 
     waitSeconds: 30,
+
     paths: {
         // plugins
         //create alias to plugins (not needed if plugins are on the baseUrl)
@@ -46,4 +47,4 @@ define('gmaps',
     });
 
 // load the app.
-require(['backbone', 'templates', 'gmaps', 'main']);
+require(['backbone', 'backbone.localstorage', 'templates', 'gmaps', 'main']);
