@@ -30,6 +30,21 @@ module.exports = function(grunt) {
           src: ['client/app.js', 'client/main.js']
         } //'client/**/*.js's
       }
+    },
+    less: {
+      development: {
+        options: {
+          paths: ["./assets/stylesheets/less"],
+          yuicompress: true
+        },
+        files: {
+          "./assets/stylesheets/css/style.css": "./assets/stylesheets/less/style.less"
+        }
+      }
+    },
+    watch: {
+      files: "./assets/stylesheets/less/*",
+      tasks: ["less"]
     }
   });
 
@@ -38,6 +53,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Default task.
   grunt.registerTask('default', 'jshint');
